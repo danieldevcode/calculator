@@ -1,0 +1,20 @@
+@import "variables";
+@import "functions";
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+  border-radius: 0 0 16px 16px;
+  background-color: $screen-color;
+  text-align: right;
+
+  .formula {
+    font-size: fs(3);
+  }
+
+  .result {
+    font-size: fs(2);
+  }
+}

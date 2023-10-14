@@ -1,0 +1,12 @@
+@use "base";
+@use "screen";
+@use "controls";
+@import "variables";
+
+.calculator {
+  display: grid;
+  height: 100svh;
+  grid-template-columns: 1fr;
+  grid-template-rows: 30% auto;
+  background-color: $bg-color;
+}

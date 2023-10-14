@@ -1,0 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap");
+
+// Colors
+$primary-color: hsl(242, 100%, 76%);
+$screen-color: change-color($primary-color, $saturation: 35%, $lightness: 90%);
+$numbers-color: change-color($primary-color, $lightness: 95%);
+$operators-color: change-color($primary-color, $lightness: 92%);
+$equal-color: change-color($primary-color, $lightness: 86%);
+$bg-color: change-color($primary-color, $lightness: 98%);
+$font-color: hsl(220, 15%, 20%);
+
+// Fonts
+$primary-font: "Noto Sans", sans-serif;
+$golden-ratio: 1.618;
