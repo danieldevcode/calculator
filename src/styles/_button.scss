@@ -23,6 +23,10 @@
   background-color: $numbers-color;
   @include btn-bg($numbers-color);
 
+  svg {
+    pointer-events: none;
+  }
+
   &.ac {
     grid-column: 1 / 4;
   }
