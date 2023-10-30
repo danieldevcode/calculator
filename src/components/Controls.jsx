@@ -1,13 +1,12 @@
 import Button from "./Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 function Controls({ expression, setExpression, constant, setConstant }) {
   function handleButton({ target }) {
     const value = target.id;
-    if (isOperator(value)) handleOperator(value);
-    else handleConstant(value);
+    isOperator(value) ? handleOperator(value) : handleConstant(value);
   }
 
   function isOperator(value) {
@@ -17,31 +16,59 @@ function Controls({ expression, setExpression, constant, setConstant }) {
   function handleOperator(operator) {
     // All clear
     if (operator === "delete") {
+      console.clear();
       setConstant([]);
       setExpression([]);
     }
     // Backspace
-    else if (operator === "backspace")
-      setConstant((prevConst) => prevConst.slice(0, -1));
+    else if (operator === "backspace") {
+      if (constant.length > 0) {
+        setConstant((prevConst) => prevConst.slice(0, -1));
+      }
+    }
     // Evaluate expression
     else if (operator === "enter") console.log("evaluate");
     // Operators
     else {
-      //TODO: HANDLE OPERATORS
+      if (
+        operator === "-" &&
+        constant.length === 0 &&
+        expression[expression.length - 2] !== "-"
+      )
+        setConstant((prevConst) => [...prevConst, operator]);
+      else if (constant.length > 0 && constant.join("") !== "-") {
+        setExpression((prevExp) => [...prevExp, operator, ""]);
+        setConstant([]);
+      }
     }
   }
 
   function handleConstant(digit) {
-    if (digit === "." && constant.includes(".")) return;
-    setConstant((prevConst) => [...prevConst, digit]);
+    setConstant((prevConst) => {
+      return digit === "." && prevConst.includes(".")
+        ? [...prevConst]
+        : [...prevConst, digit];
+    });
   }
 
+  // Save constant in expression
   useEffect(() => {
-    console.log("Constant: " + constant.join(""));
+    setExpression((prevExp) => {
+      return prevExp.length <= 1
+        ? [constant.join("")]
+        : prevExp.map((term, index) => {
+            return prevExp.length - 1 == index ? constant.join("") : term;
+          });
+    });
   }, [constant]);
 
   useEffect(() => {
-    console.log("Expression: " + expression.join(""));
+    console.log(`Constant [${constant}]`);
+  }, [constant]);
+
+  useEffect(() => {
+    // console.log(`Expression: [${expression}]`);
+    console.log(expression);
   }, [expression]);
 
   return (

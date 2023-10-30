@@ -11,7 +11,7 @@ function Screen({ expression, constant }) {
         try {
           return math.evaluate(expression.join(""));
         } catch (error) {
-          return 0;
+          return "Format error";
         }
       });
     },
@@ -21,8 +21,8 @@ function Screen({ expression, constant }) {
   // NOTE: COULD I RUN JUST A FUNCTION ?
   return (
     <div className="screen">
-      <p className="expression">{expression.join("")}</p>
-      <p className="evaluation">{constant}</p>
+      <p className="expression">{expression.join(" ")}</p>
+      <p className="evaluation">{constant.join("")}</p>
       <p className="evaluation">{evaluation}</p>
     </div>
   );
