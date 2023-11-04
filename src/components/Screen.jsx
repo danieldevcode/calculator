@@ -1,29 +1,45 @@
-import { useEffect, useState } from "react";
-import { create, all } from "mathjs";
+import { useEffect, useRef } from "react";
 
-function Screen({ expression, constant }) {
-  const [evaluation, setEvaluation] = useState(null);
-  const math = create(all);
+function Screen({ expression, constant, evaluation }) {
+  const EXPRESSION_REF = useRef();
+  const CONSTANT_REF = useRef();
 
   useEffect(
-    function evaluteExpression() {
-      setEvaluation(() => {
-        try {
-          return math.evaluate(expression.join(""));
-        } catch (error) {
-          return "Format error";
-        }
-      });
+    function handleExpressionScroll() {
+      const element = EXPRESSION_REF.current;
+      if (element) element.scroll(0, element.scrollHeight);
     },
     [expression]
   );
 
-  // NOTE: COULD I RUN JUST A FUNCTION ?
+  useEffect(
+    function handleConstantScroll() {
+      const element = CONSTANT_REF.current;
+      if (element) element.scroll(element.scrollWidth, 0);
+    },
+    [constant]
+  );
+
+  function handleClass(className) {
+    return evaluation === "Format error" ? `${className} error` : className;
+  }
+
   return (
     <div className="screen">
-      <p className="expression">{expression.join(" ")}</p>
-      <p className="evaluation">{constant.join("")}</p>
-      <p className="evaluation">{evaluation}</p>
+      {evaluation ? (
+        <>
+          <p className={handleClass("evaluation")}>{evaluation}</p>
+        </>
+      ) : (
+        <>
+          <p ref={EXPRESSION_REF} className="expression">
+            {expression.join("")}
+          </p>
+          <p ref={CONSTANT_REF} className="constant">
+            {constant.join("")}
+          </p>
+        </>
+      )}
     </div>
   );
 }

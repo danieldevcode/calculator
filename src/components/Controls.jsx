@@ -2,10 +2,21 @@ import Button from "./Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
+import { create, all } from "mathjs";
 
-function Controls({ expression, setExpression, constant, setConstant }) {
+function Controls({
+  expression,
+  setExpression,
+  constant,
+  setConstant,
+  evaluation,
+  setEvaluation,
+}) {
+  const math = create(all);
+
   function handleButton({ target }) {
     const value = target.id;
+    if (evaluation) allClear();
     isOperator(value) ? handleOperator(value) : handleConstant(value);
   }
 
@@ -13,13 +24,16 @@ function Controls({ expression, setExpression, constant, setConstant }) {
     return ["+", "-", "*", "/", "delete", "backspace", "enter"].includes(value);
   }
 
+  function allClear() {
+    console.clear();
+    setConstant([]);
+    setExpression([]);
+    setEvaluation(null);
+  }
+
   function handleOperator(operator) {
     // All clear
-    if (operator === "delete") {
-      console.clear();
-      setConstant([]);
-      setExpression([]);
-    }
+    if (operator === "delete") allClear();
     // Backspace
     else if (operator === "backspace") {
       if (constant.length > 0) {
@@ -27,7 +41,17 @@ function Controls({ expression, setExpression, constant, setConstant }) {
       }
     }
     // Evaluate expression
-    else if (operator === "enter") console.log("evaluate");
+    else if (operator === "enter") {
+      setEvaluation(() => {
+        try {
+          return math.evaluate(expression.join(""));
+        } catch (error) {
+          return "Format error";
+        }
+      });
+      setConstant([]);
+      setExpression([]);
+    }
     // Operators
     else {
       if (
@@ -44,11 +68,13 @@ function Controls({ expression, setExpression, constant, setConstant }) {
   }
 
   function handleConstant(digit) {
-    setConstant((prevConst) => {
-      return digit === "." && prevConst.includes(".")
-        ? [...prevConst]
-        : [...prevConst, digit];
-    });
+    if (constant.length <= 22)
+      setConstant((prevConst) => {
+        return digit === "." && prevConst.includes(".")
+          ? [...prevConst]
+          : [...prevConst, digit];
+      });
+    [];
   }
 
   // Save constant in expression
@@ -61,15 +87,6 @@ function Controls({ expression, setExpression, constant, setConstant }) {
           });
     });
   }, [constant]);
-
-  useEffect(() => {
-    console.log(`Constant [${constant}]`);
-  }, [constant]);
-
-  useEffect(() => {
-    // console.log(`Expression: [${expression}]`);
-    console.log(expression);
-  }, [expression]);
 
   return (
     <div className="controls">
