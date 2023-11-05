@@ -34,10 +34,7 @@ function Controls({
     if (operator === "clear") allClear();
     // Backspace
     else if (operator === "backspace") {
-      if (constant.length >= 1) {
-        setConstant((prevConst) => prevConst.slice(0, -1));
-      }
-      if (constant.length === 1) setConstant("0");
+      setConstant((prevConst) => prevConst.slice(0, -1));
     }
     // Evaluate expression
     else if (operator === "equals") {
@@ -71,7 +68,6 @@ function Controls({
   }
 
   useEffect(() => {
-    if (constant != 0)
       setExpression((prevExp) => {
         // Constant is an operator
         if (isOperator(constant)) {

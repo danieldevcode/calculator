@@ -20,6 +20,20 @@ function Screen({ expression, constant, evaluation }) {
     [constant]
   );
 
+  function replaceOperators(array) {
+    const OPERATORS = {
+      "+": "+",
+      "-": "-",
+      "*": "×",
+      "/": "÷",
+    };
+    return array
+      .map((term) => {
+        return OPERATORS[term] ? OPERATORS[term] : term;
+      })
+      .join("");
+  }
+
   function handleClass(className) {
     return evaluation === "Format error" ? `${className} error` : className;
   }
@@ -33,10 +47,10 @@ function Screen({ expression, constant, evaluation }) {
       ) : (
         <>
           <p ref={EXPRESSION_REF} className="expression">
-            {expression.join("")}
+            {replaceOperators(expression)}
           </p>
           <p id="display" ref={CONSTANT_REF} className="constant">
-            {constant}
+            {replaceOperators(constant.split())}
           </p>
         </>
       )}
