@@ -27,16 +27,16 @@ function Screen({ expression, constant, evaluation }) {
   return (
     <div className="screen">
       {evaluation ? (
-        <>
-          <p className={handleClass("evaluation")}>{evaluation}</p>
-        </>
+        <p id="display" className={handleClass("evaluation")}>
+          {evaluation}
+        </p>
       ) : (
         <>
           <p ref={EXPRESSION_REF} className="expression">
             {expression.join("")}
           </p>
-          <p ref={CONSTANT_REF} className="constant">
-            {constant.join("")}
+          <p id="display" ref={CONSTANT_REF} className="constant">
+            {constant}
           </p>
         </>
       )}
@@ -45,3 +45,5 @@ function Screen({ expression, constant, evaluation }) {
 }
 
 export default Screen;
+
+// 5*-+5

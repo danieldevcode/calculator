@@ -6,7 +6,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 
 function App() {
   const [expression, setExpression] = useState([]);
-  const [constant, setConstant] = useState([]);
+  const [constant, setConstant] = useState("0");
   const [evaluation, setEvaluation] = useState(null);
   const hotkeysArr = [
     "0",
@@ -36,7 +36,28 @@ function App() {
   useHotkeys(
     hotkeysArr,
     function handleHotkey(e) {
-      const button = document.getElementById(e.key.toLowerCase());
+      const ID_DICTIONARY = {
+        0: "zero",
+        1: "one",
+        2: "two",
+        3: "three",
+        4: "four",
+        5: "five",
+        6: "six",
+        7: "seven",
+        8: "eight",
+        9: "nine",
+        "+": "add",
+        "-": "subtract",
+        "*": "multiply",
+        "/": "divide",
+        enter: "equals",
+        ".": "decimal",
+        delete: "clear",
+        backspace: "backspace",
+      };
+      const ID = ID_DICTIONARY[e.key.toLowerCase()];
+      const button = document.getElementById(ID);
       handleButtonStyle(button);
       button.click();
     },

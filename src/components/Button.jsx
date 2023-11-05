@@ -1,7 +1,8 @@
-function Button({ id, content, className, onClick }) {
+function Button({ id, value, content, className, onClick }) {
   return (
     <button
-      id={id ? id : content}
+      id={id}
+      value={value}
       className={`button ${className ? className : null}`}
       onClick={onClick}
     >

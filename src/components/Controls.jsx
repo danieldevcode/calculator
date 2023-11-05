@@ -15,33 +15,32 @@ function Controls({
   const math = create(all);
 
   function handleButton({ target }) {
-    const value = target.id;
-    if (evaluation) allClear();
+    const value = target.value;
     isOperator(value) ? handleOperator(value) : handleConstant(value);
   }
 
   function isOperator(value) {
-    return ["+", "-", "*", "/", "delete", "backspace", "enter"].includes(value);
+    return ["+", "-", "*", "/", "clear", "backspace", "equals"].includes(value);
   }
 
   function allClear() {
-    console.clear();
-    setConstant([]);
+    setConstant("0");
     setExpression([]);
     setEvaluation(null);
   }
 
   function handleOperator(operator) {
     // All clear
-    if (operator === "delete") allClear();
+    if (operator === "clear") allClear();
     // Backspace
     else if (operator === "backspace") {
-      if (constant.length > 0) {
+      if (constant.length >= 1) {
         setConstant((prevConst) => prevConst.slice(0, -1));
       }
+      if (constant.length === 1) setConstant("0");
     }
     // Evaluate expression
-    else if (operator === "enter") {
+    else if (operator === "equals") {
       setEvaluation(() => {
         try {
           return math.evaluate(expression.join(""));
@@ -49,90 +48,128 @@ function Controls({
           return "Format error";
         }
       });
-      setConstant([]);
+      setConstant("0");
       setExpression([]);
     }
-    // Operators
-    else {
-      if (
-        operator === "-" &&
-        constant.length === 0 &&
-        expression[expression.length - 2] !== "-"
-      )
-        setConstant((prevConst) => [...prevConst, operator]);
-      else if (constant.length > 0 && constant.join("") !== "-") {
-        setExpression((prevExp) => [...prevExp, operator, ""]);
-        setConstant([]);
-      }
-    }
+    // Operators +, -, *, /
+    else setConstant(operator);
   }
 
   function handleConstant(digit) {
     if (constant.length <= 22)
       setConstant((prevConst) => {
-        return digit === "." && prevConst.includes(".")
-          ? [...prevConst]
-          : [...prevConst, digit];
+        // Replace default 0 with the digit && Can't begin with multiple zeros
+        if (prevConst[0] == 0) return digit;
+        // Replace operator with digit
+        if (isOperator(prevConst[0])) return digit;
+        // Two decimals in one constant are not allowed
+        else if (digit === "." && prevConst.includes(".")) return prevConst;
+        // Add digit to previous constant
+        else return prevConst + digit;
       });
     [];
   }
 
-  // Save constant in expression
   useEffect(() => {
-    setExpression((prevExp) => {
-      return prevExp.length <= 1
-        ? [constant.join("")]
-        : prevExp.map((term, index) => {
-            return prevExp.length - 1 == index ? constant.join("") : term;
+    if (constant != 0)
+      setExpression((prevExp) => {
+        // Constant is an operator
+        if (isOperator(constant)) {
+          /* If an operator is pressed after an evaluation, 
+          start a new calculation that operates on the
+          result of the previous evaluation */
+          if (evaluation) {
+            const tempEvaluation = evaluation;
+            setEvaluation(null);
+            return [tempEvaluation, constant, ""];
+          }
+          // Replace consecutive operator EXCEPT "-"
+          if (
+            isOperator(prevExp[prevExp.length - 1]) &&
+            isOperator(prevExp[prevExp.length - 2])
+          )
+            return [...prevExp.slice(0, -2), constant];
+
+          return [...prevExp, constant];
+        }
+
+        // Constant is a number
+        if (prevExp.length === 0) return [constant];
+        else if (isOperator(prevExp[prevExp.length - 1])) {
+          const newArr = [...prevExp, ""];
+          const result = newArr.map((term, index) => {
+            return newArr.length - 1 === index ? constant : term;
           });
-    });
+          return result;
+        } else {
+          return prevExp.map((term, index) => {
+            return prevExp.length - 1 === index ? constant : term;
+          });
+        }
+      });
   }, [constant]);
+
+  useEffect(() => {
+    console.log(expression);
+  }, [expression]);
 
   return (
     <div className="controls">
-      <Button id="delete" content="AC" className="ac" onClick={handleButton} />
       <Button
-        id="/"
+        id="clear"
+        value="clear"
+        content="AC"
+        className="ac"
+        onClick={handleButton}
+      />
+      <Button
+        id="divide"
+        value="/"
         content="&#247;"
         className="operator"
         onClick={handleButton}
       />
-      <Button content="7" onClick={handleButton} />
-      <Button content="8" onClick={handleButton} />
-      <Button content="9" onClick={handleButton} />
+      <Button id="seven" value="7" content="7" onClick={handleButton} />
+      <Button id="eight" value="8" content="8" onClick={handleButton} />
+      <Button id="nine" value="9" content="9" onClick={handleButton} />
       <Button
-        id="*"
+        id="multiply"
+        value="*"
         content="&#215;"
         className="operator"
         onClick={handleButton}
       />
-      <Button content="4" onClick={handleButton} />
-      <Button content="5" onClick={handleButton} />
-      <Button content="6" onClick={handleButton} />
+      <Button id="four" value="4" content="4" onClick={handleButton} />
+      <Button id="five" value="5" content="5" onClick={handleButton} />
+      <Button id="six" value="6" content="6" onClick={handleButton} />
       <Button
-        id="-"
+        id="subtract"
+        value="-"
         content="&#8722;"
         className="operator"
         onClick={handleButton}
       />
-      <Button content="1" onClick={handleButton} />
-      <Button content="2" onClick={handleButton} />
-      <Button content="3" onClick={handleButton} />
+      <Button id="one" value="1" content="1" onClick={handleButton} />
+      <Button id="two" value="2" content="2" onClick={handleButton} />
+      <Button id="three" value="3" content="3" onClick={handleButton} />
       <Button
-        id="+"
+        id="add"
+        value="+"
         content="&#43;"
         className="operator"
         onClick={handleButton}
       />
-      <Button content="0" onClick={handleButton} />
-      <Button content="." onClick={handleButton} />
+      <Button id="zero" value="0" content="0" onClick={handleButton} />
+      <Button id="decimal" value="." content="." onClick={handleButton} />
       <Button
         id="backspace"
+        value="backspace"
         content={<FontAwesomeIcon icon={faDeleteLeft} size="sm" />}
         onClick={handleButton}
       />
       <Button
-        id="enter"
+        id="equals"
+        value="equals"
         content="&#61;"
         className="equal"
         onClick={handleButton}
