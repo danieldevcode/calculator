@@ -1,0 +1,65 @@
+@import "variables";
+@import "functions";
+
+.history-button {
+  position: absolute;
+  top: 16px;
+  right: 24px;
+  font-size: fs(1);
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.history {
+  visibility: hidden;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  height: 100%;
+  width: 100%;
+  border-radius: 0 0 16px 16px;
+  background-color: $bg-color;
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    padding: 24px;
+    font-size: fs(1);
+    background-color: $operators-color;
+
+    .back-icon {
+      cursor: pointer;
+    }
+
+    .trash-icon {
+      margin-left: auto;
+      cursor: pointer;
+    }
+  }
+
+  .list {
+    list-style-type: none;
+    overflow-y: scroll;
+    font-size: fs(1);
+    padding: 0 24px;
+    text-align: right;
+    li {
+      padding: 16px 0;
+      word-break: break-all;
+      color: change-color($font-color, $lightness: 50%);
+      .result {
+        display: block;
+        color: $font-color;
+      }
+    }
+  }
+}

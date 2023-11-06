@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { replaceOperators } from "../utils";
 
 function Screen({ expression, constant, evaluation }) {
   const EXPRESSION_REF = useRef();
@@ -20,20 +21,6 @@ function Screen({ expression, constant, evaluation }) {
     [constant]
   );
 
-  function replaceOperators(array) {
-    const OPERATORS = {
-      "+": "+",
-      "-": "-",
-      "*": "×",
-      "/": "÷",
-    };
-    return array
-      .map((term) => {
-        return OPERATORS[term] ? OPERATORS[term] : term;
-      })
-      .join("");
-  }
-
   function handleClass(className) {
     return evaluation === "Format error" ? `${className} error` : className;
   }
@@ -47,7 +34,7 @@ function Screen({ expression, constant, evaluation }) {
       ) : (
         <>
           <p ref={EXPRESSION_REF} className="expression">
-            {replaceOperators(expression)}
+            {replaceOperators(expression).join(" ")}
           </p>
           <p id="display" ref={CONSTANT_REF} className="constant">
             {replaceOperators(constant.split())}

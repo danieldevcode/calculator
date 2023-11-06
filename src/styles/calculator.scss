@@ -1,12 +1,14 @@
 @use "base";
 @use "screen";
 @use "controls";
+@use "history";
+@use "mediaquery";
 @import "variables";
 
 .calculator {
   display: grid;
   height: 100svh;
   grid-template-columns: 1fr;
-  grid-template-rows: 30% auto;
+  grid-template-rows: 30% 1fr;
   background-color: $bg-color;
 }

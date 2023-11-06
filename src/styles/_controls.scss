@@ -3,8 +3,9 @@
 .controls {
   display: grid;
   align-self: center;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(5, 74px);
+  justify-self: center;
+  grid-template-columns: repeat(4, minmax(74px, 154px));
+  grid-template-rows: auto;
   gap: 4px;
   padding: 24px;
 }

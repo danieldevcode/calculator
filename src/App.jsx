@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Controls from "./components/Controls";
 import Screen from "./components/Screen";
+import History from "./components/History";
+
 import "./styles/calculator.scss";
 import { useHotkeys } from "react-hotkeys-hook";
 
@@ -8,6 +10,7 @@ function App() {
   const [expression, setExpression] = useState([]);
   const [constant, setConstant] = useState("0");
   const [evaluation, setEvaluation] = useState(null);
+  const [history, setHistory] = useState([]);
   const hotkeysArr = [
     "0",
     "1",
@@ -85,7 +88,9 @@ function App() {
         setConstant={setConstant}
         evaluation={evaluation}
         setEvaluation={setEvaluation}
+        setHistory={setHistory}
       />
+      <History history={history} setHistory={setHistory} />
     </div>
   );
 }
