@@ -46,5 +46,3 @@ function Screen({ expression, constant, evaluation }) {
 }
 
 export default Screen;
-
-// 5*-+5

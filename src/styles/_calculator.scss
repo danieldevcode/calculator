@@ -1,11 +1,11 @@
-@use "base";
-@use "screen";
-@use "controls";
-@use "history";
-@use "mediaquery";
 @import "variables";
 
 .calculator {
+  /* Properties to hide the history */
+  position: relative;
+  overflow: hidden;
+  /* Properties to hide the history */
+
   display: grid;
   height: 100svh;
   grid-template-columns: 1fr;

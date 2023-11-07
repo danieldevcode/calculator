@@ -1,18 +1,20 @@
 @import "variables";
 @import "functions";
+@import "mixins";
 
 .screen {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 50% 50%;
   gap: 16px;
-  
+
   padding: 62px 24px 24px 24px;
   border-radius: 0 0 16px 16px;
   background-color: $screen-color;
   text-align: right;
 
   .expression {
+    @include scrollbar;
     font-size: fs(1);
     letter-spacing: 2px;
     word-break: break-all;
@@ -20,9 +22,11 @@
   }
 
   .constant {
+    @include scrollbar;
     font-size: fs(2);
     letter-spacing: 2px;
     overflow-x: scroll;
+    overflow-y: hidden;
   }
 
   .evaluation {
@@ -33,6 +37,7 @@
 
   .error {
     color: #da1e37;
-    font-size: fs(2);
+    font-size: fs(2.5);
+    word-break: normal;
   }
 }

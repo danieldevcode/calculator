@@ -1,10 +1,12 @@
 @import "variables";
 @import "functions";
+@import "mixins";
 
-.history-button {
+.history-icon {
+  @include icon;
   position: absolute;
-  top: 16px;
-  right: 24px;
+  top: 24px;
+  left: 24px;
   font-size: fs(1);
 
   &:hover {
@@ -13,36 +15,37 @@
 }
 
 .history {
-  visibility: hidden;
+  /* Properties to hide the history */
   position: absolute;
   top: 0%;
-  left: 0%;
+  &.open {
+    left: 0%;
+  }
+  &.closed {
+    left: 100%;
+  }
+  /* Properties to hide the history */
 
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-
+  @include flexbox($direction: column);
   height: 100%;
   width: 100%;
-  border-radius: 0 0 16px 16px;
   background-color: $bg-color;
+  transition: left 0.25s linear;
 
   .header {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-
+    @include flexbox($align: center, $gap: 16px);
     padding: 24px;
-    font-size: fs(1);
+    border-radius: 0 0 16px 16px;
     background-color: $operators-color;
+    font-size: fs(1);
 
-    .back-icon {
-      cursor: pointer;
+    .back-icon,
+    .trash-icon {
+      @include icon;
     }
 
     .trash-icon {
       margin-left: auto;
-      cursor: pointer;
     }
   }
 
@@ -50,12 +53,20 @@
     list-style-type: none;
     overflow-y: scroll;
     font-size: fs(1);
-    padding: 0 24px;
+    @include scrollbar;
     text-align: right;
     li {
-      padding: 16px 0;
+      padding: 16px 24px;
       word-break: break-all;
+      border-radius: 16px;
       color: change-color($font-color, $lightness: 50%);
+      transition: background 0.15s;
+
+      &:active,
+      &:hover {
+        background-color: $screen-color;
+        cursor: pointer;
+      }
       .result {
         display: block;
         color: $font-color;

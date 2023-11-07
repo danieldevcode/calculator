@@ -2,8 +2,7 @@ import { useState } from "react";
 import Controls from "./components/Controls";
 import Screen from "./components/Screen";
 import History from "./components/History";
-
-import "./styles/calculator.scss";
+import "./styles/app.scss";
 import { useHotkeys } from "react-hotkeys-hook";
 
 function App() {
@@ -75,22 +74,30 @@ function App() {
   }
 
   return (
-    <div className="calculator">
-      <Screen
-        expression={expression}
-        constant={constant}
-        evaluation={evaluation}
-      />
-      <Controls
-        expression={expression}
-        setExpression={setExpression}
-        constant={constant}
-        setConstant={setConstant}
-        evaluation={evaluation}
-        setEvaluation={setEvaluation}
-        setHistory={setHistory}
-      />
-      <History history={history} setHistory={setHistory} />
+    <div className="app">
+      <div className="calculator">
+        <Screen
+          expression={expression}
+          constant={constant}
+          evaluation={evaluation}
+        />
+        <Controls
+          expression={expression}
+          setExpression={setExpression}
+          constant={constant}
+          setConstant={setConstant}
+          evaluation={evaluation}
+          setEvaluation={setEvaluation}
+          setHistory={setHistory}
+        />
+        <History
+          history={history}
+          setHistory={setHistory}
+          setExpression={setExpression}
+          setConstant={setConstant}
+          setEvaluation={setEvaluation}
+        />
+      </div>
     </div>
   );
 }
