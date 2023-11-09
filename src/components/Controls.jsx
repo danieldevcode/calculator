@@ -59,8 +59,13 @@ function Controls({
   );
 
   function handleButton({ target }) {
-    const value = target.value;
-    isOperator(value) ? handleOperator(value) : handleConstant(value);
+    try {
+      const value = target.value;
+      navigator.vibrate(1);
+      isOperator(value) ? handleOperator(value) : handleConstant(value);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function handleOperator(operator) {
