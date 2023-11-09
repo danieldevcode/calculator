@@ -106,11 +106,10 @@ function Controls({
     setEvaluation(() => {
       try {
         const evaluation = math.evaluate(expression.join(""));
-        if (evaluation)
-          setHistory((prevHistory) => [
-            ...prevHistory,
-            `${expression.join(" ")} = ${evaluation}`,
-          ]);
+        setHistory((prevHistory) => [
+          ...prevHistory,
+          `${expression.join(" ")} = ${evaluation}`,
+        ]);
         return evaluation;
       } catch (error) {
         return "Format error";
