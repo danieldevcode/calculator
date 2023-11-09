@@ -37,6 +37,8 @@
   border-radius: 24px;
   cursor: pointer;
   transition: background 0.15s;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
   &:active {
     background-color: change-color($operators-color, $lightness: 86%);
   }
