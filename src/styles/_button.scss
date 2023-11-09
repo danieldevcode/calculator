@@ -12,6 +12,8 @@
 
   background-color: $numbers-color;
   @include btn-bg($numbers-color);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 
   svg {
     pointer-events: none;

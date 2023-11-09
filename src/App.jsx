@@ -67,9 +67,9 @@ function App() {
   );
 
   function handleButtonStyle(button) {
-    button.style.backgroundColor = "rgb(204,204,255)";
+    button.classList.add("active");
     setTimeout(() => {
-      button.removeAttribute("style");
+      button.classList.remove("active");
     }, 50);
   }
 

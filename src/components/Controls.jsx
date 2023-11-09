@@ -12,7 +12,7 @@ function Controls({
   setHistory,
 }) {
   const math = create(all);
-  
+
   useEffect(
     function buildExpression() {
       setExpression((prevExp) => {

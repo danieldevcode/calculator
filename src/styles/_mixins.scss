@@ -44,13 +44,17 @@
 
 @mixin btn-bg($color) {
   background-color: $color;
-  &:hover {
-    cursor: pointer;
-    background-color: darken($color, 3%);
+
+  @media (hover: hover) {
+    &:hover {
+      cursor: pointer;
+      background-color: darken($color, 3%);
+    }
   }
 
-  &:active {
-    background-color: darken($color, 5%);
+  &:active,
+  &.active {
+    background-color: darken($color, 6%);
   }
 }
 
