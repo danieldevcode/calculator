@@ -1,22 +1,12 @@
 @import "variables";
 @import "functions";
-
-@mixin btn-bg($color) {
-  background-color: $color;
-  &:hover {
-    cursor: pointer;
-    background-color: darken($color, 3%);
-  }
-
-  &:active {
-    background-color: darken($color, 5%);
-  }
-}
+@import "mixins";
 
 .button {
   border: none;
   border-radius: 16px;
   aspect-ratio: 1/ 1;
+
   font-family: $primary-font;
   font-size: fs(1);
 

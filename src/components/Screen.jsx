@@ -5,30 +5,21 @@ function Screen({ expression, constant, evaluation }) {
   const EXPRESSION_REF = useRef();
   const CONSTANT_REF = useRef();
 
-  useEffect(
-    function handleExpressionScroll() {
-      const element = EXPRESSION_REF.current;
-      if (element) element.scroll(0, element.scrollHeight);
-    },
-    [expression]
-  );
+  useEffect(() => handleScroll(EXPRESSION_REF), [expression]);
+  useEffect(() => handleScroll(CONSTANT_REF), [constant]);
 
-  useEffect(
-    function handleConstantScroll() {
-      const element = CONSTANT_REF.current;
-      if (element) element.scroll(element.scrollWidth, 0);
-    },
-    [constant]
-  );
-
-  function handleClass(className) {
-    return evaluation === "Format error" ? `${className} error` : className;
+  function handleScroll(ref) {
+    const element = ref.current;
+    if (element) element.scroll(element.scrollWidth, element.scrollHeight);
   }
-
+  
   return (
     <div className="screen">
       {evaluation ? (
-        <p id="display" className={handleClass("evaluation")}>
+        <p
+          id="display"
+          className={isNaN(evaluation) ? "evaluation error" : "evaluation"}
+        >
           {evaluation}
         </p>
       ) : (
@@ -37,7 +28,7 @@ function Screen({ expression, constant, evaluation }) {
             {replaceOperators(expression).join(" ")}
           </p>
           <p id="display" ref={CONSTANT_REF} className="constant">
-            {replaceOperators(constant.split())}
+            {replaceOperators(constant.split()).join("")}
           </p>
         </>
       )}

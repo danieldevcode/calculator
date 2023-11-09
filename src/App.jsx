@@ -74,30 +74,28 @@ function App() {
   }
 
   return (
-    <div className="app">
-      <div className="calculator">
-        <Screen
-          expression={expression}
-          constant={constant}
-          evaluation={evaluation}
-        />
-        <Controls
-          expression={expression}
-          setExpression={setExpression}
-          constant={constant}
-          setConstant={setConstant}
-          evaluation={evaluation}
-          setEvaluation={setEvaluation}
-          setHistory={setHistory}
-        />
-        <History
-          history={history}
-          setHistory={setHistory}
-          setExpression={setExpression}
-          setConstant={setConstant}
-          setEvaluation={setEvaluation}
-        />
-      </div>
+    <div className="calculator">
+      <Screen
+        expression={expression}
+        constant={constant}
+        evaluation={evaluation}
+      />
+      <Controls
+        expression={expression}
+        setExpression={setExpression}
+        constant={constant}
+        setConstant={setConstant}
+        evaluation={evaluation}
+        setEvaluation={setEvaluation}
+        setHistory={setHistory}
+      />
+      <History
+        history={history}
+        setHistory={setHistory}
+        setExpression={setExpression}
+        setConstant={setConstant}
+        setEvaluation={setEvaluation}
+      />
     </div>
   );
 }

@@ -2,20 +2,8 @@
 @import "functions";
 @import "mixins";
 
-.history-icon {
-  @include icon;
-  position: absolute;
-  top: 24px;
-  left: 24px;
-  font-size: fs(1);
-
-  &:hover {
-    cursor: pointer;
-  }
-}
-
 .history {
-  /* Properties to hide the history */
+  /* Properties to show-hide the history modal*/
   position: absolute;
   top: 0%;
   &.open {
@@ -24,7 +12,7 @@
   &.closed {
     left: 100%;
   }
-  /* Properties to hide the history */
+  /* Properties to show-hide the history modal*/
 
   @include flexbox($direction: column);
   height: 100%;
@@ -51,9 +39,9 @@
 
   .list {
     list-style-type: none;
-    overflow-y: scroll;
     font-size: fs(1);
     @include scrollbar;
+    overflow-y: scroll;
     text-align: right;
     li {
       padding: 16px 24px;
@@ -72,5 +60,17 @@
         color: $font-color;
       }
     }
+  }
+}
+
+.history-icon {
+  @include icon;
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  font-size: fs(1);
+
+  &:hover {
+    cursor: pointer;
   }
 }

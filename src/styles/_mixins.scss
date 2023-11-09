@@ -1,5 +1,20 @@
 @import "functions";
 
+@mixin grid(
+  $rows: none,
+  $columns: none,
+  $justify: normal,
+  $align: normal,
+  $gap: 0px
+) {
+  display: grid;
+  grid-template-rows: $rows;
+  grid-template-columns: $columns;
+  justify-content: $justify;
+  align-content: $align;
+  gap: $gap;
+}
+
 @mixin flexbox(
   $direction: row,
   $wrap: nowrap,
@@ -27,12 +42,24 @@
   }
 }
 
+@mixin btn-bg($color) {
+  background-color: $color;
+  &:hover {
+    cursor: pointer;
+    background-color: darken($color, 3%);
+  }
+
+  &:active {
+    background-color: darken($color, 5%);
+  }
+}
+
 @mixin scrollbar {
   &::-webkit-scrollbar {
     width: 4px;
   }
 
-  &::-webkit-scrollbar:horizontal{
+  &::-webkit-scrollbar:horizontal {
     height: 3px;
   }
 
@@ -47,4 +74,36 @@
 
   scrollbar-width: thin;
   scrollbar-color: grey transparent;
+}
+
+@mixin adjustCalcFontSize {
+  .expression {
+    font-size: fs(2);
+  }
+
+  .constant,
+  .evaluation {
+    font-size: fs(3);
+  }
+
+  .controls {
+    .button {
+      font-size: fs(1.5);
+    }
+
+    .operator {
+      font-size: fs(2);
+    }
+  }
+
+  .history {
+    .header,
+    .list {
+      font-size: fs(1.5);
+    }
+  }
+
+  .history-icon {
+    font-size: fs(2);
+  }
 }

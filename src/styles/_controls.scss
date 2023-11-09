@@ -1,11 +1,13 @@
 @use "button";
+@import "mixins";
 
 .controls {
-  display: grid;
-  align-self: center;
-  justify-self: center;
-  grid-template-columns: repeat(4, minmax(74px, 124px));
-  grid-template-rows: auto;
-  gap: 4px;
+  @include grid(
+    $columns: repeat(4, minmax(32px, 124px)),
+    $rows: repeat(5, min-content),
+    $justify: center,
+    $align: center,
+    $gap: 4px
+  );
   padding: 24px;
 }

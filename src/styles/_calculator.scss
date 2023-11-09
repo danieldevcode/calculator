@@ -1,14 +1,11 @@
 @import "variables";
+@import "mixins";
 
 .calculator {
-  /* Properties to hide the history */
+  @include grid($columns: 1fr, $rows: minmax(228px, 30%) 1fr);
   position: relative;
   overflow: hidden;
-  /* Properties to hide the history */
-
-  display: grid;
+  width: 100%;
   height: 100svh;
-  grid-template-columns: 1fr;
-  grid-template-rows: 30% 1fr;
   background-color: $bg-color;
 }

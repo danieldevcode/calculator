@@ -1,20 +1,32 @@
 @import "mixins";
-@import "variables";
-@media screen and (min-width: 768px) {
-  .app {
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items: center;
-    align-items: center;
-    width: 100svw;
+
+@media screen and (min-width: 600px) and (max-width: 835px) {
+  .calculator {
+    .screen {
+      border-radius: 16px;
+    }
+
+    @include adjustCalcFontSize;
+  }
+}
+
+@media screen and (min-width: 835px) {
+  body {
+    @include grid($align: center, $justify: center);
     height: 100svh;
+    background-color: $primary-color;
   }
 
   .calculator {
-    max-width: 600px;
-    max-height: 980px;
+    width: 600px;
+    height: 960px;
     border-radius: 16px;
+    box-shadow: 0 2px 8px -2px darken($bg-color, 35%);
 
-    box-shadow: 0 2px 8px -2px change-color($bg-color, $lightness: 93%);
+    .screen {
+      border-radius: 16px;
+    }
+
+    @include adjustCalcFontSize;
   }
 }
